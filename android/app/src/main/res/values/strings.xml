@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">kharoubi economie</string>
+    <string name="title_activity_main">kharoubi economie</string>
+    <string name="package_name">com.kharoubi.tadarok</string>
+    <string name="custom_url_scheme">com.kharoubi.tadarok</string>
+</resources>

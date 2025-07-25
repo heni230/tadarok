@@ -1,69 +1,62 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
+import * as XLSX from "xlsx";
 
-export default function TeacherDashboard() {
-  const navigate = useNavigate();
-  const teacherName = localStorage.getItem('teacherUsername') || 'أستاذ';
+const TeacherDashboard = () => {
+  const [students, setStudents] = useState([]);
+
+  const pageStyle = {
+    backgroundImage: "url('../assets/background.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+  };
+
+  const overlay = {
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    padding: "40px",
+    borderRadius: "10px",
+    maxWidth: "800px",
+    width: "100%",
+    color: "#fff",
+  };
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const snapshot = await getDocs(collection(db, "students"));
+      const data = snapshot.docs.map(doc => doc.data());
+      setStudents(data);
+    };
+    fetchStudents();
+  }, []);
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(students);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Talabith");
+    XLSX.writeFile(workbook, "talabith.xlsx");
+  };
 
   return (
-    <div className="container">
-      <div className="header-brand">📘 Kharoubi Tadarok</div>
-      <h2>👨‍🏫 لوحة التحكم</h2>
-
-      <div
-        style={{
-          backgroundColor: '#e8f5e9',
-          border: '2px solid #c8e6c9',
-          borderRadius: '12px',
-          padding: '28px',
-          marginTop: '20px',
-        }}
-      >
-        <h3 style={{ marginBottom: '10px' }}>مرحبًا بك، {teacherName} 👋</h3>
-        <p style={{ fontSize: '17px' }}>اختر الإجراء الذي تريد القيام به:</p>
-
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '15px',
-            marginTop: '25px',
-          }}
-        >
-          <button
-            className="home-button"
-            onClick={() => navigate('/register-student')}
-          >
-            📝 تسجيل تلميذ
-          </button>
-
-          <button
-            className="home-button"
-            onClick={() => navigate('/student-list')}
-          >
-            👦 قائمة التلاميذ
-          </button>
-
-          <button
-            className="home-button"
-            onClick={() => navigate('/session-manager')}
-          >
-            🗓️ إدارة الحصص
-          </button>
-
-          <button
-            className="home-button"
-            onClick={() => {
-              localStorage.clear();
-              navigate('/login');
-            }}
-            style={{ backgroundColor: '#bdbdbd' }}
-          >
-            🔓 تسجيل الخروج
-          </button>
-        </div>
+    <div style={pageStyle}>
+      <div style={overlay}>
+        <h2>📋 قائمة التلاميذ</h2>
+        <button onClick={exportToExcel}>📥 تصدير إلى Excel</button>
+        <ul style={{ marginTop: "20px", textAlign: "left" }}>
+          {students.map((s, i) => (
+            <li key={i}>
+              {s.name} — {s.phone} — {s.institute} — {s.wilaya} {s.delegation && `(${s.delegation})`}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
-}
+};
+
+export default TeacherDashboard;

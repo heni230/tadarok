@@ -1,67 +1,73 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { db } from '../firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
-import '../App.css';
+import React, { useState } from "react";
+import { db } from "../firebase/firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import PageWrapper from "../components/PageWrapper";
 
-export default function StudentLogin() {
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+const StudentLogin = () => {
+  const [form, setForm] = useState({ phone: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-    if (!phone || !password) {
-      alert('📌 الرجاء إدخال كل البيانات');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const { phone, password } = form;
+
+    if (!/^\d{8}$/.test(phone) || !password) {
+      setError("⚠️ رقم الهاتف يجب أن يكون 8 أرقام وكلمة السر مطلوبة");
       return;
     }
 
     try {
-      const snap = await getDocs(collection(db, 'students'));
-      const matchedDoc = snap.docs.find(doc => {
-        const data = doc.data();
-        return data.phone === phone && data.password === password;
-      });
+      const snap = await getDocs(collection(db, "students"));
+      const student = snap.docs.find(
+        (doc) =>
+          doc.data().phone === phone &&
+          doc.data().password === password
+      );
 
-      if (matchedDoc) {
-        const student = matchedDoc.data();
-
-        // 🧠 تخزين بيانات التلميذ في localStorage
-        localStorage.setItem('studentPhone', student.phone);
-        localStorage.setItem('studentName', student.name || 'تلميذ');
-
-        navigate('/dashboard');
-      } else {
-        alert('❌ رقم الهاتف أو كلمة السر غير صحيحة');
+      if (!student) {
+        setError("🚫 البيانات غير صحيحة، الرجاء التثبت");
+        return;
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('⚠️ حدث خطأ غير متوقع أثناء محاولة الدخول');
+
+      localStorage.setItem("studentPhone", phone);
+      localStorage.setItem("studentName", student.data().name); // ✅ السطر المضاف لعرض الاسم في Navbar
+
+      navigate("/student");
+    } catch (err) {
+      console.error("❌ خطأ في الاتصال بقاعدة البيانات:", err);
+      setError("❌ خطأ تقني... حاول من جديد لاحقًا");
     }
   };
 
   return (
-    <div className="container">
-      <h2>👨‍🎓 دخول التلميذ</h2>
-
-      <form onSubmit={handleLogin}>
+    <PageWrapper emoji="🔐" title="دخول التلميذ">
+      <form onSubmit={handleSubmit}>
         <input
-          type="tel"
-          placeholder="📱 رقم الهاتف"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          name="phone"
+          placeholder="📞 رقم الهاتف"
+          value={form.phone}
+          onChange={handleChange}
         />
-
         <input
+          name="password"
           type="password"
           placeholder="🔒 كلمة السر"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={form.password}
+          onChange={handleChange}
         />
-
-        <button type="submit">➡️ دخول</button>
+        <button type="submit">🚀 دخول</button>
+        {error && <p style={{ color: "yellow", marginTop: "10px" }}>{error}</p>}
       </form>
-    </div>
+    </PageWrapper>
   );
-}
+};
+
+export default StudentLogin;

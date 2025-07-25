@@ -1,79 +1,70 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import RequireAuth from './components/RequireAuth';
-
-import LandingScreen from './pages/LandingScreen';
-import RegisterStudent from './pages/RegisterStudent';
-import StudentLogin from './pages/StudentLogin';
-import StudentDashboard from './pages/StudentDashboard';
-
-import Login from './pages/Login';
-import SessionManager from './pages/SessionManager';
-import StudentList from './pages/StudentList';
-import GenerateSessions from './pages/GenerateSessions';
-import TeacherDashboard from './pages/teacherdashboard';
-
-import './App.css';
+// 🧩 الصفحات
+import HomePage from "./pages/HomePage";
+import StudentRegister from "./pages/StudentRegister";
+import StudentLogin from "./pages/StudentLogin";
+import TeacherLogin from "./pages/TeacherLogin";
+import ProtectedDashboard from "./pages/ProtectedDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
+import SessionManager from "./pages/SessionManager";
+import CreateSession from "./pages/CreateSession";
+import StudentList from "./pages/StudentList";
+import TasjilTalamithFilHesase from "./pages/TasjilTalamithFilHesase";
+import ChangePasswordPage from "./pages/ChangePasswordPage"; // ✅ تم إضافته
+import TeacherNotesPage from './pages/TeacherNotesPage';
+import AddTeacherNotePage from "./pages/AddTeacherNotePage";
+import StudentNotesByPhonePage from "./pages/StudentNotesByPhonePage";
+import "./App.css";
 
 function App() {
   return (
-    <div className="app-background">
-      <Navbar />
-      <main className="app-content">
+    <div className="app-wrapper">
+      <Router>
+        <Navbar />
         <Routes>
-          {/* 👨‍🎓 صفحات التلميذ */}
-          <Route path="/" element={<LandingScreen />} />
-          <Route path="/student-register" element={<RegisterStudent />} />
-          <Route path="/student-login" element={<StudentLogin />} />
-          <Route path="/dashboard" element={<StudentDashboard />} />
+          {/* 🏠 الصفحة الرئيسية */}
+          <Route path="/home" element={<HomePage />} />
 
-          {/* 👨‍🏫 صفحات الأستاذ (بحماية) */}
-          <Route
-            path="/login"
-            element={
-              <RequireAuth>
-                <Login />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/teacher-dashboard"
-            element={
-              <RequireAuth>
-                <TeacherDashboard />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/session-manager"
-            element={
-              <RequireAuth>
-                <SessionManager />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/student-list"
-            element={
-              <RequireAuth>
-                <StudentList />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/generate-sessions"
-            element={
-              <RequireAuth>
-                <GenerateSessions />
-              </RequireAuth>
-            }
-          />
+          {/* 📝 تسجيل التلميذ */}
+          <Route path="/" element={<StudentRegister />} />
+
+          {/* 🔐 دخول التلميذ */}
+          <Route path="/login" element={<StudentLogin />} />
+
+          {/* 👨‍🎓 صفحة التلميذ */}
+          <Route path="/student" element={<StudentDashboard />} />
+
+          {/* 🔐 تغيير كلمة المرور */}
+          <Route path="/change-password" element={<ChangePasswordPage />} /> {/* ✅ المسار الجديد */}
+          
+          <Route path="/notes" element={<TeacherNotesPage />} />
+
+          {/* 🎓 دخول الأستاذ */}
+          <Route path="/teacher" element={<TeacherLogin />} />
+
+          {/* 📋 لوحة الأستاذ */}
+          <Route path="/dashboard" element={<ProtectedDashboard />} />
+
+          {/* 📅 إدارة الحصص */}
+          <Route path="/sessions" element={<SessionManager />} />
+
+          {/* 🔧 إنشاء الحصة */}
+          <Route path="/create-session" element={<CreateSession />} />
+
+          {/* 📄 قائمة التلاميذ */}
+          <Route path="/students-list" element={<StudentList />} />
+          
+          <Route path="/add-note" element={<AddTeacherNotePage />} />
+          
+          {/* 📝 تسجيل جماعي للتلاميذ في الحصة */}
+          <Route path="/tasjil-talamith" element={<TasjilTalamithFilHesase />} />
         </Routes>
-      </main>
-      <Footer />
+        <Footer />
+      </Router>
     </div>
   );
 }

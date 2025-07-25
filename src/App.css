@@ -1,163 +1,214 @@
-/* ✅ خلفية اقتصادية */
-.app-background {
-  background-image: url('./assets/images/background-eco.jpg'); /* ← تأكد أنك خزّنت الصورة هنا */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ✅ الطبقة الشفافة فوق الخلفية */
-.app-content {
-  background-color: rgba(255, 255, 255, 0.2); /* 20% opacity = شفافية 80% */
-  backdrop-filter: blur(0.3px);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  box-sizing: border-box;
-}
-/* ✅ الأساسيات العامة */
+/* 🌐 إعداد عام */
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  font-size: 18px;
-  color: #222;
-  direction: rtl;
-  text-align: right;
-}
-
-/* ✅ العلامة التجارية */
-.header-brand {
-  font-size: 26px;
-  font-weight: bold;
-  color: #0d47a1;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-/* ✅ الحاوية العامة للنماذج */
-.container {
-  width: 100%;
-  max-width: 520px;
-  background: rgba(255, 255, 255, 0.4); /* ← شفافية 60% */
-  padding: 36px 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-}
-
-/* ✅ عناوين النماذج */
-.container {
-  width: 100%;
-  max-width: 520px;
-  background: rgba(255, 255, 255, 0.4); /* ← شفافية 60% */
-  padding: 36px 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-}
-
-/* ✅ حقول الإدخال */
-form {
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url("./assets/background.jpg"); /* ضع اسم الصورة هنا */
+  background-size: cover; /* تخلي الصورة تغطي كامل الصفحة */
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 80vh; /* طول الشاشة كامل */
+  width: 90vw; /* العرض الكامل */
   display: flex;
   flex-direction: column;
 }
 
+
+/* 🌌 خلفية كاملة للتطبيق */
+.app-wrapper {
+  background-image: url("./assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  position: relative;
+  z-index: 0;
+}
+
+/* 🧊 صندوق المحتوى */
+.transparent-box {
+  background-color: rgba(255, 255, 255, 0.25); /* زيادة الشفافية */
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  color: #fff; /* نص أبيض */
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* وضوح أكثر للنص */
+  text-align: center;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  margin: 30px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* 🧾 تنسيق المدخلات */
 input, select {
-  display: block;
   width: 100%;
-  margin-bottom: 18px;
-  padding: 14px 16px;
-  font-size: 17px;
-  border-radius: 10px;
-  border: 2px solid #444;
-  background-color: rgba(255, 255, 255, 0.4);
-  color: #111;
-  box-sizing: border-box;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
-/* ✅ زر الإدخال */
+/* 🔘 الأزرار */
 button {
-  font-size: 18px;
+  padding: 12px 20px;
+  background-color: #1e90ff;
+  color: white;
   font-weight: bold;
-  padding: 14px;
-  background-color: #1976d2;
-  color: white;
   border: none;
-  border-radius: 10px;
-  width: 100%;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-button:hover {
-  background-color: #1565c0;
-}
-
-/* ✅ صناديق التوقيت للتلميذ */
-.session-time-box {
-  background-color: #f1f8e9;
-  padding: 12px 16px;
-  border-radius: 10px;
-  margin-bottom: 14px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-/* ✅ زرّ العودة أو التنقل */
-.home-button {
-  background-color: #ef5350;
-  color: white;
-  border: none;
-  padding: 10px 16px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
-}
-.home-button:hover {
-  background-color: #c62828;
+  transition: background-color 0.3s ease;
 }
 
-/* ✅ تنسيق الجداول */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 16px;
-  font-size: 16px;
+button:hover {
+  background-color: #0066cc;
 }
-thead th {
-  background-color: #e3f2fd;
+
+/* 📋 القوائم */
+ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin-top: 20px;
+}
+
+ul li {
+  margin-bottom: 12px;
+  background-color: rgba(0, 0, 0, 0.05);
   padding: 10px;
-  border-bottom: 1px solid #ccc;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
-tbody td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
+
+ul li button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* 🧭 Navbar */
+.navbar {
+  width: 100%;
+  background-color: rgba(0, 43, 91, 0.3);
+  color: white;
+  padding: 0px 135px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.nav-left h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.nav-right {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.nav-right a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-right a:hover {
+  color: #ffd700;
+}
+
+/* 🎯 أزرار الصفحة الرئيسية */
+.homepage-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.action-button {
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 12px 18px;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
   text-align: center;
 }
 
-/* ✅ زر الحذف */
-.delete-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.delete-btn:hover {
-  background-color: #d32f2f;
+.action-button:hover {
+  background-color: #005ecb;
 }
 
-/* ✅ صندوق توليد الحصص */
-.form-box {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 30px;
-  background-color: #f9f9f9;
-  padding: 18px;
-  border-radius: 8px;
+/* 🧯 Footer */
+.footer {
+  width: 100%;
+  background-color: rgba(0, 43, 91, 0.3);
+  color: white;
+  padding: 0px 135px;
+  text-align: center;
+  font-size: 0.9rem;
+  border-top: 2px solid #ccc;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* 📱 استجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .transparent-box {
+    padding: 25px;
+  }
+
+  .nav-left h1 {
+    font-size: 1.2rem;
+  }
+
+  .nav-right {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .action-button {
+    font-size: 1rem;
+    padding: 10px 14px;
+  }
+
+  ul li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  ul li button {
+    margin-top: 8px;
+  }
 }

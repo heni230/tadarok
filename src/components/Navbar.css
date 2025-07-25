@@ -1,0 +1,89 @@
+/* 🔷 Navbar عام */
+.navbar {
+  display: flex;
+  justify-content: center; /* ✅ تمركز العناصر في الوسط */
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background-color: rgba(0, 43, 91, 0.8);
+  border-bottom: 2px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 🔹 يسار Navbar */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-left h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+/* ☰ زر القائمة في الهاتف */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+/* 🔸 يمين Navbar */
+.nav-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center; /* ✅ إضافية للتمركز وسط */
+  width: 100%;
+}
+
+/* ✅ أيقونات فقط */
+.nav-right a img,
+.nav-right button img {
+  width: 100px;
+  height: 100px;
+  transition: transform 0.3s ease;
+}
+
+.nav-right a img:hover,
+.nav-right button img:hover {
+  transform: scale(1.1);
+}
+
+/* 🟥 زر خروج */
+.logout-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-right {
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    gap: 12px;
+  }
+
+  .nav-right.open {
+    display: flex;
+  }
+}
